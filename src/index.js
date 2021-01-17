@@ -37,7 +37,7 @@ client.on('message', msg => {
         ]);
     }
     if (msg.content === "setup") {
-        gatekeeper.createAllRoles(msg);
+        terra.createAllRoles(msg);
     }
     if (msg.content === "terra"){
         fileReader.readFile("survival-of-the-fittest"); 
