@@ -1,7 +1,12 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
 const client = new Discord.Client();
 
-const fs = require('fs')
+import fs from 'fs';
+import Terraformer from "./terraformer/Terraformer.js";
+const terra = new Terraformer();
+import FileReader from "./data/FileReader.js";
+const fileReader = new FileReader();
+import roomManager from './model/RoomManager.js';
 
 
 client.on('ready', () => {
@@ -13,6 +18,11 @@ client.on('message', msg => {
 
     if (msg.content === 'ping') {
         msg.channel.send('pong');
+    }
+    if (msg.content === "terra"){
+        fileReader.readFile("survival-of-the-fittest"); 
+        msg.channel.send(roomManager.getRoomNames());
+        //terra.createNewChannel(msg, "du 2", "voice");
     }
 });
 
