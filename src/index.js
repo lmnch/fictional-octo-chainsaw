@@ -12,6 +12,7 @@ import Gatekeeper from './gatekeeper/Gatekeeper.js';
 const gatekeeper = new Gatekeeper();
 
 
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -20,7 +21,7 @@ client.on('guildCreate', guild => {
     guild.systemChannel.send("LUKAS ist dumm")
 });
 
-client.on('message', msg => {
+client.on('message', async msg => {
    const channelName = msg.channel.name;
 
     if (msg.content === 'ping') {
@@ -36,15 +37,17 @@ client.on('message', msg => {
             },
         ]);
     }
-    if (msg.content === "setup") {
-        terra.createAllRoles(msg);
-    }
-    if (msg.content === "terra"){
-        fileReader.readFile("survival-of-the-fittest"); 
+    if (msg.content.startsWith("terra")){
+        const mysteryKey = msg.content.split(" ")[1];
+
+        fileReader.readFile(mysteryKey); 
+        // Create category channel for mystery
+        const parentChannel = await terra.createNewChannel(msg, mysteryKey, "category");
+        terra.createAllRoles(msg, roomManager.getAllRoles());
         roomManager.getRoomNames().forEach(roomName => {
             const room = roomManager.getRoom(roomName);
-            terra.createNewChannel(msg, room.roomName, "voice");
-            room.textChannels.forEach(channelName => terra.createNewChannel(msg, channelName, "text"));
+            terra.createNewChannel(msg, room.roomName, "voice", parentChannel, room.accessCondition);
+            room.textChannels.forEach(channelName => terra.createNewChannel(msg, channelName, "text", parentChannel, room.accessCondition));
         });
     }
 });
