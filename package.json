@@ -1,0 +1,25 @@
+{
+  "name": "fictional-octo-chainsaw",
+  "version": "1.0.0",
+  "description": "A discord bot to transform your server into a mystery",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmnch/fictional-octo-chainsaw.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "game",
+    "mystery"
+  ],
+  "author": "lmnch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lmnch/fictional-octo-chainsaw/issues"
+  },
+  "homepage": "https://github.com/lmnch/fictional-octo-chainsaw#readme"
+}
