@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "A discord bot to transform your server into a mystery",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "test": "node index.js"
+    "test": "node src/index.js"
   },
   "repository": {
     "type": "git",

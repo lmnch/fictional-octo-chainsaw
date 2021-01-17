@@ -1,15 +1,20 @@
 {
-    "rooms": {
-        "hallway": {
-            "textChannels": [ "intro"],
-            "speechChannels": [],
-            "accessCondition": null,
-            "tasks": [ "enter-the-wild"]
-        }
+  "rooms": {
+    "hallway": {
+      "textChannels": ["intro"],
+      "speechChannels": [],
+      "accessCondition": null,
+      "tasks": ["enter-the-wild"]
     },
-    "tasks": {
-        "enter-the-wild": {
-            
-        }
+    "grassland": {
+        "textChannels": [],
+        "speechChannels": [],
+        "accessCondition": null,
+        "tasks": []}
+  },
+  "tasks": {
+    "enter-the-wild": {
+      "followUpRooms": ["grassland"]
     }
+  }
 }
