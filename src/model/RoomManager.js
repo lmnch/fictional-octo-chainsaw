@@ -13,12 +13,18 @@ class RoomManager {
     this.rooms[roomName].addTask(task);
   }
 
-  getRoomNames(){
-      return Object.values(this.rooms).map(room=>room.roomName);
+  getRoomNames() {
+    return Object.values(this.rooms).map((room) => room.roomName);
   }
 
-  getRoom(roomName){
-      return this.rooms[roomName];
+  getRoom(roomName) {
+    return this.rooms[roomName];
+  }
+
+  getAllRoles() {
+    return [
+      ...new Set(Object.values(this.rooms).map((r) => r.accessCondition)),
+    ].filter((r) => r != null);
   }
 }
 

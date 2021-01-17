@@ -9,7 +9,7 @@
     "grassland": {
         "textChannels": [],
         "speechChannels": [],
-        "accessCondition": null,
+        "accessCondition": "adventurer",
         "tasks": []}
   },
   "tasks": {
