@@ -12,6 +12,14 @@ class RoomManager {
     this.tasks[task.name] = task;
     this.rooms[roomName].addTask(task);
   }
+
+  getRoomNames(){
+      return this.rooms.map(room=>room.roomName());
+  }
+
+  getRoom(roomName){
+      return this.rooms[roomName];
+  }
 }
 
 const roomManager = new RoomManager();
