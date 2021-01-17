@@ -2,7 +2,7 @@
   "name": "fictional-octo-chainsaw",
   "version": "1.0.0",
   "description": "A discord bot to transform your server into a mystery",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "node index.js"
   },

@@ -9,6 +9,8 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
+   const channelName = msg.channel.name;
+
     if (msg.content === 'ping') {
         msg.channel.send('pong');
     }

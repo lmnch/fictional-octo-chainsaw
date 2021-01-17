@@ -1,0 +1,15 @@
+{
+    "rooms": {
+        "hallway": {
+            "textChannels": [ "intro"],
+            "speechChannels": [],
+            "accessCondition": null,
+            "tasks": [ "enter-the-wild"]
+        }
+    },
+    "tasks": {
+        "enter-the-wild": {
+            
+        }
+    }
+}
