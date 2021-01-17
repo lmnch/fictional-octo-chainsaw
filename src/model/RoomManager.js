@@ -14,7 +14,7 @@ class RoomManager {
   }
 
   getRoomNames(){
-      return this.rooms.map(room=>room.roomName());
+      return Object.values(this.rooms).map(room=>room.roomName());
   }
 
   getRoom(roomName){
