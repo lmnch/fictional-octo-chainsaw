@@ -20,9 +20,11 @@ export default class Room {
   }
 
   get textChannels() {
-    if(!this.task){
+    if (!this.task) {
       return [];
     }
+    if (this.task.questionChannel == this.task.solutionChannel)
+      return [this.task.questionChannel];
     return [this.task.questionChannel, this.task.solutionChannel];
   }
 
@@ -42,7 +44,7 @@ export default class Room {
     return this._followUpRoom;
   }
 
-  get isStartRoom(){
+  get isStartRoom() {
     return this._isStartRoom;
   }
 }

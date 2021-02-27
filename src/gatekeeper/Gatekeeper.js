@@ -1,15 +1,24 @@
 class Gatekeeper {
   constructor() {}
 
-  giveAccess(msg, accessRole) {
+  async giveAccess(msg, accessRole) {
     const role = msg.guild.roles.cache.find((x) => x.name === accessRole);
-    msg.member.roles.add(role);
+    await msg.member.roles.add(role);
   }
 
-  removeAccess(msg, accessRole) {
+  async removeAccess(msg, accessRole) {
     const role = msg.guild.roles.cache.find((x) => x.name === accessRole);
-    msg.member.roles.remove(role);
+    await  msg.member.roles.remove(role);
   }
+
+  async memberHasRole(member, accessRole){
+    const role = member.roles.cache.find(x => x.name===accessRole);
+
+    if(role){
+        return true;
+    }
+    return false;
+  } 
 }
 
 const gatekeeper = new Gatekeeper();

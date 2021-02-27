@@ -11,7 +11,7 @@
           "This is the introduction.\nAre you ready to enter the adventure? [yes|no]"
         ],
         "solution": "yes",
-        "solutionChannel": "porch",
+        "solutionChannel": "intro",
         "questionChannel": "intro"
       },
       "followUpRoom": "grassland"
