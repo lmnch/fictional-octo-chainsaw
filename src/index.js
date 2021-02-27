@@ -26,16 +26,6 @@ client.on('message', async msg => {
 
     if (msg.content === 'ping') {
         msg.channel.send('pong');
-        msg.channel.overwritePermissions([
-            {
-                id: msg.guild.id,
-                deny: ['VIEW_CHANNEL'],
-            },
-            {
-                id: msg.author.id,
-                allow: ['VIEW_CHANNEL'],
-            },
-        ]);
     }
     if (msg.content.startsWith("terra")){
         const mysteryKey = msg.content.split(" ")[1];

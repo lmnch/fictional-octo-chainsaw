@@ -7,12 +7,11 @@ export const taskType = {
 
 export default class Task {
     
-    constructor(name, type, textData, solution, followUpRooms) {
+    constructor(name, type, textData, solution) {
         this._name = name;
         this._type = type;
         this._textData = textData;
         this._solution = solution;
-        this._followUpRooms = followUpRooms;
     }
 
     get name(){

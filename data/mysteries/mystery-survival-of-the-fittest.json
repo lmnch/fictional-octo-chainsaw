@@ -4,17 +4,21 @@
       "textChannels": ["intro"],
       "speechChannels": [],
       "accessCondition": null,
-      "tasks": ["enter-the-wild"]
+      "task": {
+        "name": "enter-the-wild",
+        "type": "QUESTION",
+        "textData": [
+          "This is the introduction.\nAre you ready to enter the adventure? [yes|no]"
+        ],
+        "solution": "yes"
+      },
+      "followUpRoom": "grassland"
     },
     "grassland": {
-        "textChannels": [],
-        "speechChannels": [],
-        "accessCondition": "adventurer",
-        "tasks": []}
-  },
-  "tasks": {
-    "enter-the-wild": {
-      "followUpRooms": ["grassland"]
+      "textChannels": [],
+      "speechChannels": [],
+      "accessCondition": "adventurer",
+      "task": null
     }
   }
 }

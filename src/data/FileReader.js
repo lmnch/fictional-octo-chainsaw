@@ -12,31 +12,26 @@ export default class FileReader {
     );
     const mystery = JSON.parse(textData);
     Object.entries(mystery.rooms).forEach(([roomName, roomData]) => {
+      let task = null;
+      if (roomData.task) {
+        task = new Task(
+          roomData.task.name,
+          taskType[roomData.task.type],
+          roomData.task.textData,
+          roomData.task.solution
+        );
+      }
+
       const room = new Room(
         roomName,
         roomData.textChannels,
         roomData.speechChannels,
-        roomData.accessCondition
+        roomData.accessCondition,
+        task,
+        roomData.followUpRoom
       );
 
       roomManager.addRoom(room);
-
-      roomData.tasks.forEach((taskName) => {
-        const taskData = JSON.parse(
-          fs.readFileSync(
-            `./data/mysteries/${mysteryKey}/tasks/${taskName}.json`
-          )
-        );
-
-        let task = new Task(
-          taskName,
-          taskType[taskData.type],
-          taskData.solution,
-          mystery.tasks[taskName].followUpRooms
-        );
-
-        roomManager.addTask(task, roomName);
-      });
     });
   }
 }

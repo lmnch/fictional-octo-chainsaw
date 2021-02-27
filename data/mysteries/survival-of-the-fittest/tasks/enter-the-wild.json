@@ -1,5 +1,0 @@
-{
-    "type": "QUESTION",
-    "textData": ["This is the introduction.\nAre you ready to enter the adventure? [yes|no]"],
-    "solution": "yes"
-}

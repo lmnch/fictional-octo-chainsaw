@@ -11,14 +11,14 @@ export default class Terraformer {
    * params msg -> is msg object
    * params channelType -> text/voice
    */
-  createNewChannel(
+  async createNewChannel(
     msg,
     channelName,
     channelType,
     parentChannel,
     nescessaryRole
   ) {
-    return msg.guild.channels
+    return await msg.guild.channels
       .create(channelName, {
         type: channelType,
       })
