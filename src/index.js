@@ -10,6 +10,7 @@ import roomManager from "./model/RoomManager.js";
 
 import gatekeeper from "./gatekeeper/Gatekeeper.js";
 import riddler from "./riddler/Riddler.js";
+import { taskType } from "./model/Task.js";
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -30,9 +31,7 @@ client.on("message", async (msg) => {
       msg.guild.roles.cache.find((x) => x.name === roomManager.getStartRole())
     );
   } else if (msg.content === "start adventure") {
-    gatekeeper.giveAccess(
-      msg,roomManager.getStartRole()
-    );
+    gatekeeper.giveAccess(msg, roomManager.getStartRole());
   } else if (msg.content.startsWith("terra")) {
     const mysteryKey = msg.content.split(" ")[1];
 
@@ -62,7 +61,11 @@ client.on("message", async (msg) => {
       );
 
       // write questions
-      if (room.task) riddler.askQuestion(room.task, msg);
+      if (room.task) {
+        if (room.task.type == taskType.QUESTION) {
+          riddler.askQuestion(room.task, msg);
+        }
+      }
     });
   } else {
     riddler.checkAnswer(msg);

@@ -12,6 +12,7 @@ class Riddler {
     if (taskType.QUESTION !== task.type) {
       console.error("task is not a question!");
       textChannel.send("A exception occured: Task is not of type question!");
+      return;
     }
 
     // clear channel
