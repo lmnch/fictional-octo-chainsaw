@@ -3,7 +3,8 @@
     "hallway": {
       "textChannels": ["intro"],
       "speechChannels": [],
-      "accessCondition": null,
+      "isStartRoom": true,
+      "accessCondition": "starter",
       "task": {
         "name": "enter-the-wild",
         "type": "QUESTION",

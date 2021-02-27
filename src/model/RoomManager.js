@@ -20,6 +20,17 @@ class RoomManager {
       ...new Set(Object.values(this.rooms).map((r) => r.accessCondition)),
     ].filter((r) => r != null);
   }
+
+  getStartRole() {
+    let startRole = null;
+    Object.values(this.rooms).forEach(room=>{
+      if(room.isStartRoom){
+        startRole =  room.accessCondition;
+      }
+    })
+
+    return startRole;
+  }
 }
 
 const roomManager = new RoomManager();

@@ -28,7 +28,8 @@ export default class FileReader {
         roomData.speechChannels,
         roomData.accessCondition,
         task,
-        roomData.followUpRoom
+        roomData.followUpRoom,
+        roomData.isStartRoom
       );
 
       roomManager.addRoom(room);

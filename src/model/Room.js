@@ -5,7 +5,8 @@ export default class Room {
     speechChannels,
     accessCondition,
     task,
-    followUpRoom
+    followUpRoom,
+    isStartRoom
   ) {
     this._roomSpeechChannel = roomSpeechChannel;
     this._textChannels = textChannels;
@@ -13,6 +14,7 @@ export default class Room {
     this._accessCondition = accessCondition;
     this._task = task;
     this._followUpRoom = followUpRoom;
+    this._isStartRoom = isStartRoom || false;
   }
 
   get roomName() {
@@ -37,5 +39,9 @@ export default class Room {
 
   get followUpRoom() {
     return this._followUpRoom;
+  }
+
+  get isStartRoom(){
+    return this._isStartRoom;
   }
 }
