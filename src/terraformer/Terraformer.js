@@ -30,16 +30,29 @@ export default class Terraformer {
       })
       .then(async (channel) => {
         if (nescessaryRole) {
-          const role = msg.guild.roles.find("name", nescessaryRole);
-          channel.overwritePermissions(role.id, ["VIEW_CHANNEL"]);
+          const role = msg.guild.roles.cache.find((x) => x.name === nescessaryRole);
+          channel.overwritePermissions([{id:role.id,allow:["VIEW_CHANNEL"],type:"role"},{id:msg.guild.roles.everyone,deny:["VIEW_CHANNEL"],type:"role"}]);
         }
         return channel;
       });
   }
 
-  createAllRoles(msg, roleNames) {
+  async createTextChannel(msg, channelName, role, parentChannel)
+  {
+    return await this.createNewChannel(msg, channelName, "text", parentChannel, role);
+  }
+  async createVoiceChannel(msg, channelName, role, parentChannel)
+  {
+    return await this.createNewChannel(msg, channelName, "voice", parentChannel, role);
+  }
+  async createCategory(msg, channelName)
+  {
+    return await this.createNewChannel(msg, channelName, "category", null, null);
+  }
+
+  async createAllRoles(msg, roleNames) {
     for (let a = 0; a < roleNames.length; a++) {
-      this.createRole(roleNames[a], msg);
+      await this.createRole(roleNames[a], msg); // todo: create roles parallel
     }
   }
 
@@ -47,7 +60,7 @@ export default class Terraformer {
     let role = msg.guild.roles.cache.find((x) => x.name === roleName);
     if (role === undefined) {
       // Role doesn't exist, safe to create
-      msg.guild.roles.create({
+      await msg.guild.roles.create({
         data: {
           name: roleName,
           permissions: [
@@ -63,5 +76,15 @@ export default class Terraformer {
     } else {
       // Role exists
     }
+  }
+
+  async destroyChannel(msg, channelName)
+  {
+    let fetchedChannel = msg.guild.channels.cache.find((x) => x.name === channelName);
+
+    await fetchedChannel.delete()
+    .catch(err => {
+        console.error(err);
+    });
   }
 }

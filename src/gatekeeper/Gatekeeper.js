@@ -1,3 +1,4 @@
+import { UserManager } from "discord.js";
 
 
 export default class Gatekeeper{
@@ -7,6 +8,10 @@ export default class Gatekeeper{
     }
 
     giveAccess(user, accessRole){
-        user.addRole(accessRole);
+        user.roles.add(accessRole);
+    }
+
+    removeAccess(user, accessRole) {
+        user.roles.remove(accessRole);
     }
 }

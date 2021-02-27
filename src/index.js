@@ -27,17 +27,24 @@ client.on('message', async msg => {
     if (msg.content === 'ping') {
         msg.channel.send('pong');
     }
-    if (msg.content.startsWith("terra")){
+    else if (msg.content === 'de')
+    {
+        gatekeeper.removeAccess(msg.member, msg.guild.roles.cache.find((x) => x.name === roomManager.getStartRole()));
+    }
+    else if (msg.content === 'start adventure') {
+        gatekeeper.giveAccess(msg.member, msg.guild.roles.cache.find((x) => x.name === roomManager.getStartRole()));
+    }
+    else if (msg.content.startsWith("terra")){
         const mysteryKey = msg.content.split(" ")[1];
 
         fileReader.readFile(mysteryKey); 
         // Create category channel for mystery
-        const parentChannel = await terra.createNewChannel(msg, mysteryKey, "category");
-        terra.createAllRoles(msg, roomManager.getAllRoles());
+        const parentChannel = await terra.createCategory(msg, mysteryKey);
+        await terra.createAllRoles(msg, roomManager.getAllRoles());
         roomManager.getRoomNames().forEach(roomName => {
             const room = roomManager.getRoom(roomName);
-            terra.createNewChannel(msg, room.roomName, "voice", parentChannel, room.accessCondition);
-            room.textChannels.forEach(channelName => terra.createNewChannel(msg, channelName, "text", parentChannel, room.accessCondition));
+            terra.createVoiceChannel(msg, room.roomName, room.accessCondition, parentChannel);
+            room.textChannels.forEach(channelName => terra.createTextChannel(msg, channelName, room.accessCondition, parentChannel));
         });
     }
 });
