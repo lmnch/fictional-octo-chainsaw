@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord, { RoleManager } from "discord.js";
 const client = new Discord.Client();
 
 import fs from "fs";
@@ -31,11 +31,21 @@ client.on("message", async (msg) => {
       msg.guild.roles.cache.find((x) => x.name === roomManager.getStartRole())
     );
   } else if (msg.content === "start adventure") {
+    roomManager.getAllRoles().filter(role=>roomManager.getStartRole()===role).forEach(role=>gatekeeper.removeAccess(msg, role));
     gatekeeper.giveAccess(msg, roomManager.getStartRole());
   } else if (msg.content.startsWith("terra")) {
     const mysteryKey = msg.content.split(" ")[1];
 
     fileReader.readFile(mysteryKey);
+
+    // clear old data
+    await Promise.all(
+      roomManager
+        .getAllTextAndVoiceChannels()
+        .map(async (channelName) => terra.destroyChannel(msg, channelName))
+    );
+    await terra.destroyChannel(msg, mysteryKey);
+
     // Create category channel for mystery
     const parentChannel = await terra.createCategory(msg, mysteryKey);
     await terra.createAllRoles(msg, roomManager.getAllRoles());

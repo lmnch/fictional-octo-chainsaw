@@ -1,13 +1,11 @@
 export default class Room {
   constructor(
     roomSpeechChannel,
-    speechChannels,
     accessCondition,
     task,
     isStartRoom
   ) {
     this._roomSpeechChannel = roomSpeechChannel;
-    this._speechChannels = speechChannels;
     this._accessCondition = accessCondition;
     this._task = task;
 
@@ -25,10 +23,6 @@ export default class Room {
     if (this.task.questionChannel == this.task.solutionChannel)
       return [this.task.questionChannel];
     return [this.task.questionChannel, this.task.solutionChannel];
-  }
-
-  get speechChannels() {
-    return this._speechChannels;
   }
 
   get accessCondition() {

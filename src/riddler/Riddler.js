@@ -16,7 +16,7 @@ class Riddler {
     }
 
     // clear channel
-    textChannel.send(task.name).then((res) => textChannel.send(task.textData));
+    textChannel.send(task.textData);
   }
 
   async checkAnswer(msg) {
@@ -31,14 +31,15 @@ class Riddler {
     // delete msg
     const nextRoomName = room.task.getNextRoomForSolution(msg.content);
 
+    if (!msg.author.bot) await msg.delete();
     if (nextRoomName) {
       const followUp = roomManager.getRoom(nextRoomName);
+
 
       await gatekeeper.removeAccess(msg, room.accessCondition);
       await gatekeeper.giveAccess(msg, followUp.accessCondition);
     }
 
-    if (!msg.author.bot) msg.delete();
   }
 }
 

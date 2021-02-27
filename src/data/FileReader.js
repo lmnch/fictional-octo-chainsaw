@@ -26,7 +26,6 @@ export default class FileReader {
 
       const room = new Room(
         roomName,
-        roomData.speechChannels,
         roomData.accessCondition,
         task,
         roomData.isStartRoom

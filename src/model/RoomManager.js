@@ -44,8 +44,8 @@ class RoomManager {
   getAllTextAndVoiceChannels(){
     const names = [];
     Object.values(this.rooms).forEach(room => {
-      room.textChannels.forEach(name=>names.add(name));
-      room.voiceChannels.forEach(name=>names.add(name));
+      room.textChannels.forEach(name=>names.push(name));
+      names.push(room.roomName); // voice channel
     });
     return names;
   }

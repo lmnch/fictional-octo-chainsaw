@@ -30,24 +30,48 @@ export default class Terraformer {
       })
       .then(async (channel) => {
         if (nescessaryRole) {
-          const role = msg.guild.roles.cache.find((x) => x.name === nescessaryRole);
-          channel.overwritePermissions([{id:role.id,allow:["VIEW_CHANNEL"],type:"role"},{id:msg.guild.roles.everyone,deny:["VIEW_CHANNEL"],type:"role"}]);
+          const role = msg.guild.roles.cache.find(
+            (x) => x.name === nescessaryRole
+          );
+          channel.overwritePermissions([
+            { id: role.id, allow: ["VIEW_CHANNEL"], type: "role" },
+            {
+              id: msg.guild.roles.everyone,
+              deny: ["VIEW_CHANNEL"],
+              type: "role",
+            },
+          ]);
         }
         return channel;
       });
   }
 
-  async createTextChannel(msg, channelName, role, parentChannel)
-  {
-    return await this.createNewChannel(msg, channelName, "text", parentChannel, role);
+  async createTextChannel(msg, channelName, role, parentChannel) {
+    return await this.createNewChannel(
+      msg,
+      channelName,
+      "text",
+      parentChannel,
+      role
+    );
   }
-  async createVoiceChannel(msg, channelName, role, parentChannel)
-  {
-    return await this.createNewChannel(msg, channelName, "voice", parentChannel, role);
+  async createVoiceChannel(msg, channelName, role, parentChannel) {
+    return await this.createNewChannel(
+      msg,
+      channelName,
+      "voice",
+      parentChannel,
+      role
+    );
   }
-  async createCategory(msg, channelName)
-  {
-    return await this.createNewChannel(msg, channelName, "category", null, null);
+  async createCategory(msg, channelName) {
+    return await this.createNewChannel(
+      msg,
+      channelName,
+      "category",
+      null,
+      null
+    );
   }
 
   async createAllRoles(msg, roleNames) {
@@ -78,13 +102,15 @@ export default class Terraformer {
     }
   }
 
-  async destroyChannel(msg, channelName)
-  {
-    let fetchedChannel = msg.guild.channels.cache.find((x) => x.name === channelName);
+  async destroyChannel(msg, channelName) {
+    let fetchedChannel = msg.guild.channels.cache.find(
+      (x) => x.name === channelName
+    );
 
-    await fetchedChannel.delete()
-    .catch(err => {
-        console.error(err);
+    if (!fetchedChannel) return;
+
+    await fetchedChannel.delete().catch((err) => {
+      console.error(err);
     });
   }
 }
