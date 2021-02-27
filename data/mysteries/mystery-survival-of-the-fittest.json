@@ -10,11 +10,12 @@
         "textData": [
           "This is the introduction.\nAre you ready to enter the adventure? [yes|no]"
         ],
-        "solution": "yes",
+        "solutions": {
+          "yes": "grassland"
+        },
         "solutionChannel": "intro",
         "questionChannel": "intro"
-      },
-      "followUpRoom": "grassland"
+      }
     },
     "grassland": {
       "textChannels": [],

@@ -20,7 +20,7 @@ export default class FileReader {
           roomData.task.solutionChannel,
           taskType[roomData.task.type],
           roomData.task.textData,
-          roomData.task.solution,
+          roomData.task.solutions,
         );
       }
 
@@ -29,7 +29,6 @@ export default class FileReader {
         roomData.speechChannels,
         roomData.accessCondition,
         task,
-        roomData.followUpRoom,
         roomData.isStartRoom
       );
 

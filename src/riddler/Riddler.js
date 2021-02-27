@@ -29,8 +29,10 @@ class Riddler {
     }
 
     // delete msg
-    if (room.task.solution == msg.content && room.followUpRoom) {
-      const followUp = roomManager.getRoom(room.followUpRoom);
+const nextRoomName = room.task.getNextRoomForSolution(msg.content)
+
+    if(nextRoomName){
+        const followUp = roomManager.getRoom(nextRoomName);
 
       await gatekeeper.removeAccess(msg, room.accessCondition);
       await gatekeeper.giveAccess(msg, followUp.accessCondition);

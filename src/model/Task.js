@@ -7,13 +7,13 @@ export const taskType = {
 
 export default class Task {
     
-    constructor(name, questionChannel, solutionChannel, type, textData, solution) {
+    constructor(name, questionChannel, solutionChannel, type, textData, solutions) {
         this._name = name;
         this._questionChannel = questionChannel;
         this._solutionChannel = solutionChannel;
         this._type = type;
         this._textData = textData;
-        this._solution = solution;
+        this._solutions = solutions;
     }
 
     get name(){
@@ -36,7 +36,11 @@ export default class Task {
         return this._textData;
     }
 
-    get solution(){
+    get solutions(){
         return this._solution;
+    }
+
+    getNextRoomForSolution(answer){
+        return this._solutions[answer];
     }
 }
