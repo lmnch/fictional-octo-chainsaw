@@ -16,15 +16,16 @@ export default class FileReader {
       if (roomData.task) {
         task = new Task(
           roomData.task.name,
+          roomData.task.questionChannel,
+          roomData.task.solutionChannel,
           taskType[roomData.task.type],
           roomData.task.textData,
-          roomData.task.solution
+          roomData.task.solution,
         );
       }
 
       const room = new Room(
         roomName,
-        roomData.textChannels,
         roomData.speechChannels,
         roomData.accessCondition,
         task,

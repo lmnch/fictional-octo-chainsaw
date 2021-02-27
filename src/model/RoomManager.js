@@ -23,13 +23,31 @@ class RoomManager {
 
   getStartRole() {
     let startRole = null;
-    Object.values(this.rooms).forEach(room=>{
-      if(room.isStartRoom){
-        startRole =  room.accessCondition;
+    Object.values(this.rooms).forEach((room) => {
+      if (room.isStartRoom) {
+        startRole = room.accessCondition;
       }
-    })
+    });
 
     return startRole;
+  }
+
+  getRelatedRoomByChannel(channelName) {
+    for (const room of Object.values(this.rooms)) {
+      if (room.textChannels.includes(channelName)) {
+        return room;
+      }
+    }
+    return null;
+  }
+
+  getAllTextAndVoiceChannels(){
+    const names = [];
+    Object.values(this.rooms).forEach(room => {
+      room.textChannels.forEach(name=>names.add(name));
+      room.voiceChannels.forEach(name=>names.add(name));
+    });
+    return names;
   }
 }
 

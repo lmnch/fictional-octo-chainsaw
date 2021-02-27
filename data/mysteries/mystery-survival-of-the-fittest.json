@@ -1,7 +1,6 @@
 {
   "rooms": {
     "hallway": {
-      "textChannels": ["intro"],
       "speechChannels": [],
       "isStartRoom": true,
       "accessCondition": "starter",
@@ -11,7 +10,9 @@
         "textData": [
           "This is the introduction.\nAre you ready to enter the adventure? [yes|no]"
         ],
-        "solution": "yes"
+        "solution": "yes",
+        "solutionChannel": "porch",
+        "questionChannel": "intro"
       },
       "followUpRoom": "grassland"
     },
