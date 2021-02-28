@@ -18,6 +18,8 @@ export default class Terraformer {
     parentChannel,
     nescessaryRole
   ) {
+    if(!channelName)
+    console.trace(channelName);
     return await msg.guild.channels
       .create(channelName, {
         type: channelType,

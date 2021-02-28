@@ -42,7 +42,53 @@
     },
     "forest-piece": {
       "accessCondition": "watchless-man",
-      "task": null
+      "task": {
+        "name": "the-warning",
+        "type": "CONVERSATION",
+        "introChannel": "in-front-of-the-cabin",
+        "introductionTextData": ["You go deeper and deeper in the forest. In front of you a small old cabin appears.",
+        "You knock on the door and a small old man with a pipe opens. [enter \"talk\" to start a conversion]"],
+        "conversationPartner":  {
+          "name": "Old man",
+          "image": "/old-man.jpg"
+        },
+        "startStage": "welcome",
+        "stages": {
+          "welcome": {
+            "botText": "Welcome, passenger!\nWhat circumstance brings you to this lonely place?",
+            "possibleAnswers": {
+              "a": { "text": "deer stole watch", "nextStage": "observations" },
+              "b": { "text": "did a small walk", "nextStage": "warning" }
+            }
+          },
+          "observations": {
+            "botText": "You're a lucky watchless man!\nThrough my window I observed two deers running against east. But hm....",
+            "possibleAnswers": {
+              "a": {"text": "Thanks you, I'll follow them. *leave*" , "nextStage": "end-deep-woods"},
+              "b": {"text": "\"Hm...\" what?", "nextStage": "warning"}
+            }
+          },
+          "warning": {
+            "botText": "One should not roam around in these dark woods.\nIt's a strange place ful of magic and dangers. Many adventurers disappeared and were never seen again.\nDon't go further!",
+            "possibleAnswers": {
+              "a": {"text": "That sounds too dangerous for a watch. I'll go back. *go back home*", "nextStage": "end-hallway"},
+              "b": {"text": "I fear no little forest! *go deeper in the forest*", "nextStage": "end-deep-woods"}
+            }
+          },
+          "end-deep-woods": {
+            "end": true,
+            "roomToSwitch": "deep-woods"
+          },
+          "end-hallway": {
+            "end": true,
+            "roomToSwitch": "hallway"
+          }
+        }
+      }
+    },
+    "deep-woods": {
+      "name": "the-warning",
+      "accessCondition": "explorer"
     }
   }
 }

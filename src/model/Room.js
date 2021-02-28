@@ -1,10 +1,5 @@
 export default class Room {
-  constructor(
-    roomSpeechChannel,
-    accessCondition,
-    task,
-    isStartRoom
-  ) {
+  constructor(roomSpeechChannel, accessCondition, task, isStartRoom) {
     this._roomSpeechChannel = roomSpeechChannel;
     this._accessCondition = accessCondition;
     this._task = task;
@@ -34,5 +29,22 @@ export default class Room {
 
   get isStartRoom() {
     return this._isStartRoom;
+  }
+
+  async relatesToMessage(msg) {   
+    if (this.roomName === msg.channel.name) {
+      return true;
+    }
+    if (!this._task) {
+      return false;
+    }
+    return await this._task.relatesToMsg(msg);
+  }
+
+  skipCheckAccessCheck(){
+    if(!this._task)
+    return false;
+
+    return this._task.skipCheckAccessCheck();
   }
 }

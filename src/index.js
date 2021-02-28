@@ -11,10 +11,19 @@ import roomManager from "./model/RoomManager.js";
 import gatekeeper from "./gatekeeper/Gatekeeper.js";
 import riddler from "./riddler/Riddler.js";
 import { taskType } from "./model/Task.js";
+import memberTaskStateManager from "./riddler/MemberTaskStateManager.js";
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
+
+  // start db
+  memberTaskStateManager.initSQLite();
+  memberTaskStateManager.createTableIfNotExists();
 });
+
+client.on("disconnect", ()=>{
+  memberTaskStateManager.close();
+})
 
 client.on("guildCreate", (guild) => {
   guild.systemChannel.send("LUKAS ist dumm");

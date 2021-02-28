@@ -8,19 +8,20 @@ class Riddler {
   }
 
   async checkAnswer(msg) {
-    const channelName = msg.channel.name;
+    const room = await roomManager.getRelatedRoomByMsg(msg);
 
-    const room = roomManager.getRelatedRoomByChannel(channelName);
-
-    if (!room && gatekeeper.memberHasRole(msg.member, room.accessCondition)) {
+    if (!room || !(await gatekeeper.memberHasRole(msg.member || msg.author, room))) {
       return;
     }
 
     // delete msg
-    const nextRoomName = room.task.getNextRoomForSolution(msg.member, msg.content);
+    const nextRoomName = await room.task.getNextRoomForSolution(
+      msg.member || msg.author,
+      msg.content
+    );
 
-    if (!msg.author.bot) await msg.delete();
-    if (nextRoomName) {
+    if (!msg.author.bot && msg.channel.type !== 'dm') await msg.delete();
+    if (nextRoomName && nextRoomName !== room.roomName) {
       const followUp = roomManager.getRoom(nextRoomName);
 
       await gatekeeper.removeAccess(msg, room.accessCondition);

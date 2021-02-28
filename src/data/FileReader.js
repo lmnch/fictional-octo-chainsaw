@@ -1,4 +1,4 @@
-import Task, { Question } from "../model/Task.js";
+import Task, { Conversation, Question } from "../model/Task.js";
 import Room from "../model/Room.js";
 import roomManager from "../model/RoomManager.js";
 import { taskType } from "../model/Task.js";
@@ -30,15 +30,24 @@ export default class FileReader {
     roomManager.setLoadedMystery(mysteryKey);
   }
 
-  readTask(jsonTaskData){
+  readTask(jsonTaskData) {
     // determine type
-    if(jsonTaskData.type == "QUESTION"){
-     return new Question(
+    if (jsonTaskData.type == "QUESTION") {
+      return new Question(
         jsonTaskData.name,
         jsonTaskData.questionChannel,
         jsonTaskData.solutionChannel,
         jsonTaskData.textData,
-        jsonTaskData.solutions,
+        jsonTaskData.solutions
+      );
+    } else if (jsonTaskData.type == taskType.CONVERSATION) {
+      return new Conversation(
+        jsonTaskData.name,
+        jsonTaskData.introChannel,
+        jsonTaskData.introductionTextData,
+        jsonTaskData.conversationPartner,
+        jsonTaskData.stages,
+        jsonTaskData.startStage
       );
     }
 

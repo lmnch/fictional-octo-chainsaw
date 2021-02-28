@@ -32,9 +32,10 @@ class RoomManager {
     return startRole;
   }
 
-  getRelatedRoomByChannel(channelName) {
+  async getRelatedRoomByMsg(msg) {
     for (const room of Object.values(this.rooms)) {
-      if (room.textChannels.includes(channelName)) {
+
+      if (await room.relatesToMessage(msg)) {
         return room;
       }
     }
