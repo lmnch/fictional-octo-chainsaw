@@ -20,9 +20,8 @@ export default class Room {
     if (!this.task) {
       return [];
     }
-    if (this.task.questionChannel == this.task.solutionChannel)
-      return [this.task.questionChannel];
-    return [this.task.questionChannel, this.task.solutionChannel];
+
+    return this.task.getChannels();
   }
 
   get accessCondition() {

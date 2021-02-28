@@ -72,9 +72,7 @@ client.on("message", async (msg) => {
 
       // write questions
       if (room.task) {
-        if (room.task.type == taskType.QUESTION) {
-          riddler.askQuestion(room.task, msg);
-        }
+          riddler.placeTask(room.task, msg);
       }
     });
   } else {
