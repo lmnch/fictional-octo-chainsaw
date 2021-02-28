@@ -49,6 +49,14 @@ class RoomManager {
     });
     return names;
   }
+
+  setLoadedMystery(key){
+    this._loadedMystery = key;
+  }
+
+  get loadedMystery(){
+    return this._loadedMystery;
+  }
 }
 
 const roomManager = new RoomManager();

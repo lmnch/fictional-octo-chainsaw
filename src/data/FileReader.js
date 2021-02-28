@@ -33,5 +33,7 @@ export default class FileReader {
 
       roomManager.addRoom(room);
     });
+
+    roomManager.setLoadedMystery(mysteryKey);
   }
 }
