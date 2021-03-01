@@ -1,4 +1,4 @@
-import Task, { Conversation, Question } from "../model/Task.js";
+import Task, { Conversation, EscapeRoom, Question } from "../model/Task.js";
 import Room from "../model/Room.js";
 import roomManager from "../model/RoomManager.js";
 import { taskType } from "../model/Task.js";
@@ -48,6 +48,14 @@ export default class FileReader {
         jsonTaskData.conversationPartner,
         jsonTaskData.stages,
         jsonTaskData.startStage
+      );
+    } else if (jsonTaskData.type === taskType.ESCAPE_ROOM) {
+      return new EscapeRoom(
+        jsonTaskData.name,
+        jsonTaskData.textChannel,
+        jsonTaskData.introductionText,
+        jsonTaskData.items,
+        jsonTaskData.nextRoom
       );
     }
 

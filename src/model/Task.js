@@ -1,8 +1,9 @@
+import { Message } from "discord.js";
 import memberTaskStateManager from "../riddler/MemberTaskStateManager.js";
 import roomManager from "./RoomManager.js";
 
 export const taskType = {
-  ESCAPE_ROOM: 0,
+  ESCAPE_ROOM: "ESCAPE_ROOM",
   QUESTION: "QUESTION",
   CONVERSATION: "CONVERSATION",
 };
@@ -20,7 +21,7 @@ export default class Task {
     throw new Error("Cannot return channels of abstract Task");
   }
 
-  get type() {
+  type() {
     throw new Error("Cannot determine type of abstract task");
   }
 
@@ -73,7 +74,7 @@ export class Question extends Task {
     return [this.questionChannel, this.solutionChannel];
   }
 
-  get type() {
+  type() {
     return taskType.QUESTION;
   }
 
@@ -140,7 +141,7 @@ export class Conversation extends Task {
     return [this._introChannel];
   }
 
-  get type() {
+  type() {
     return taskType.CONVERSATION;
   }
 
@@ -183,8 +184,11 @@ export class Conversation extends Task {
     // Last interaction to leave room
     if (answer === "done") {
       if (stage.end) {
-        await memberTaskStateManager.removeMemberTaskStateEntry(this._name, member);
-        
+        await memberTaskStateManager.removeMemberTaskStateEntry(
+          this._name,
+          member
+        );
+
         return stage.roomToSwitch;
       }
       return null;
@@ -198,11 +202,9 @@ export class Conversation extends Task {
       if (answerObject.nextStage) {
         const newStage = this._stages[answerObject.nextStage];
 
-        await memberTaskStateManager.setMemberTaskState(
-          this._name,
-          member,
-          { stagename: answerObject.nextStage }
-        );
+        await memberTaskStateManager.setMemberTaskState(this._name, member, {
+          stagename: answerObject.nextStage,
+        });
 
         if (newStage.end) {
           await member.send(
@@ -270,5 +272,81 @@ export class Conversation extends Task {
 
   skipCheckAccessCheck() {
     return true;
+  }
+}
+
+export class EscapeRoom extends Task {
+  constructor(name, textChannel, introText, items, nextRoom) {
+    super(name);
+    this._textChannel = textChannel;
+    this._introText = introText;
+    this._items = items;
+    this._itemsNeededToEscape = Object.entries(items)
+      .filter(([key, item]) => item.neededForSolution)
+      .map(([key, item]) => key);
+
+    this._nextRoom = nextRoom;
+  }
+
+  type() {
+    return taskType.ESCAPE_ROOM;
+  }
+
+  getChannels() {
+    return [this._textChannel];
+  }
+
+  async placeTask(msg) {
+    let textChannel = msg.guild.channels.cache.find(
+      (x) => x.name === this._textChannel
+    );
+
+    for (const str of this._introText) {
+      // check for images
+      let match;
+      if ((match = imgRegex.exec(str))) {
+        await textChannel.send({
+          files: [
+            {
+              attachment: `data/imgs/${roomManager.loadedMystery}/${match[2]}`,
+              name: match[2],
+            },
+          ],
+        });
+      } else {
+        await textChannel.send(str);
+      }
+    }
+
+    // write available items
+    for (const itemName of Object.keys(this._items)) {
+      await textChannel.send(itemName);
+    }
+  }
+
+  async getNextRoomForSolution(member, answer) {
+    // check if its item
+    const item = this._items[answer];
+
+    if (item) {
+      await member.send(`**${answer}**:\n${item.description}`);
+
+      return;
+    }
+
+    // else check if its solution
+    const usedItems = answer.split(",").map(used=>used.trim());
+
+    for (const neededItem of this._itemsNeededToEscape) {
+      if(!usedItems.includes(neededItem)) {
+        return null;
+      }
+    }
+
+    return this._nextRoom;
+  }
+
+  async relatesToMsg(msg) {
+    return msg.channel && msg.channel.name === this._textChannel;
   }
 }

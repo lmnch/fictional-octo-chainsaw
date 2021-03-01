@@ -46,9 +46,12 @@
         "name": "the-warning",
         "type": "CONVERSATION",
         "introChannel": "in-front-of-the-cabin",
-        "introductionTextData": ["You go deeper and deeper in the forest. In front of you a small old cabin appears.",
-        "You knock on the door and a small old man with a pipe opens. [enter \"talk\" to start a conversion]"],
-        "conversationPartner":  {
+        "introductionTextData": [
+          "You go deeper and deeper in the forest. In front of you a small old cabin appears.",
+          "![Caption](cabin.jpg)",
+          "You knock on the door and a small old man with a pipe opens. [enter \"talk\" to start a conversion]"
+        ],
+        "conversationPartner": {
           "name": "Old man",
           "image": "/old-man.jpg"
         },
@@ -64,15 +67,24 @@
           "observations": {
             "botText": "You're a lucky watchless man!\nThrough my window I observed two deers running against east. But hm....",
             "possibleAnswers": {
-              "a": {"text": "Thanks you, I'll follow them. *leave*" , "nextStage": "end-deep-woods"},
-              "b": {"text": "\"Hm...\" what?", "nextStage": "warning"}
+              "a": {
+                "text": "Thanks you, I'll follow them. *leave*",
+                "nextStage": "end-deep-woods"
+              },
+              "b": { "text": "\"Hm...\" what?", "nextStage": "warning" }
             }
           },
           "warning": {
             "botText": "One should not roam around in these dark woods.\nIt's a strange place ful of magic and dangers. Many adventurers disappeared and were never seen again.\nDon't go further!",
             "possibleAnswers": {
-              "a": {"text": "That sounds too dangerous for a watch. I'll go back. *go back home*", "nextStage": "end-hallway"},
-              "b": {"text": "I fear no little forest! *go deeper in the forest*", "nextStage": "end-deep-woods"}
+              "a": {
+                "text": "That sounds too dangerous for a watch. I'll go back. *go back home*",
+                "nextStage": "end-hallway"
+              },
+              "b": {
+                "text": "I fear no little forest! *go deeper in the forest*",
+                "nextStage": "end-deep-woods"
+              }
             }
           },
           "end-deep-woods": {
@@ -87,8 +99,61 @@
       }
     },
     "deep-woods": {
-      "name": "the-warning",
-      "accessCondition": "explorer"
+      "accessCondition": "explorer",
+      "task": {
+        "name": "footprints",
+        "type": "QUESTION",
+        "textData": [
+          "You see some footprint and kneel down to take a more detailed look on them.",
+          "There seem to be two different types of footprints. One consists of two shapes so you identify them as deer ones.",
+          "The others are deeper and also bigger. They remind you a bit of cat ones but somehow \"warped\".",
+          "And there are very small, very deep stitches at the toes like made by claws.",
+          "\nYou follow them for some time but then they split. The deer prints go straight out, the cat-likes turn to the left.",
+          "\nDo you (a) follow the deer prints or (b) follow the cat-like prints?"
+        ],
+        "solutions": {
+          "a": "man-of-culture-as-well",
+          "b": "glade"
+        },
+        "solutionChannel": "forest-talk",
+        "questionChannel": "forest-talk"
+      }
+    },
+    "man-of-culture-as-well": {
+      "accessCondition": "man-of-culture",
+      "task": {
+        "name": "well-fuck!",
+        "type": "ESCAPE_ROOM",
+        "introductionText": [
+          "You follow the deer prints. It gets harder because there are many fallen leafs on the ground.",
+          "*Crrrrrrrraaaaack*",
+          "Before you know what's going on, you bump on the ground.",
+          "![Well](/well-inside.jpg)",
+          "You lay inside a old-fashioned well in a depth about 3 meters. Luckily the fallen leaves have braked your fall.",
+          "But you have no idea how to escape!",
+          "\nYou look around and find several items.",
+          "\n*(type the name of the item to receive some information)*",
+          "*If you have an idea type **all** items which you want to use (',' separated)*"
+        ],
+        "items": {
+          "rope": {
+            "description": "A good old solid rope. A bit rotten but still solid.",
+            "neededForSolution": true
+          },
+          "bottle": {
+            "description": "Old green-glass bottle. Labeled but text is unreadable."
+          },
+          "grabling-hook": {
+            "description": "Rusty metal hook.",
+            "neededForSolution": true
+          }
+        },
+        "textChannel": "well-chat",
+        "nextRoom": "glade"
+      }
+    },
+    "glade": {
+      "accessCondition": "free-explorer"
     }
   }
 }
