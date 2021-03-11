@@ -146,14 +146,40 @@
           "grabling-hook": {
             "description": "Rusty metal hook.",
             "neededForSolution": true
+          },
+          "stick": {
+            "description": "Stick from a tree."
+          },
+          "pen": {
+            "description": "Old pen, propably lost by a hiker."
           }
         },
         "textChannel": "well-chat",
-        "nextRoom": "glade"
+        "nextRoom": "out-of-wellness"
+      }
+    },
+    "out-of-wellness":{
+      "accessCondition": "pathfinder",
+      "task": {
+        "name": "well-escape",
+        "type": "QUESTION",
+        "textData": [
+          "You threw the grabbling-hook with the rope out of the well.",
+          "You manage to climb out of the well!",
+          "But what to do now?",
+          "Do you (a) want to follow the deer prints or (b) go back and take the other way?"
+        ],
+        "solutions": {
+          "a": "glade",
+          "b": "glade"
+        },
+        "solutionChannel": "escaped-chat",
+        "questionChannel": "escaped-chat"
       }
     },
     "glade": {
       "accessCondition": "free-explorer"
+
     }
   }
 }
