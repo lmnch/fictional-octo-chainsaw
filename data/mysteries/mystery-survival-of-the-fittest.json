@@ -5,7 +5,7 @@
       "accessCondition": "starter",
       "task": {
         "name": "enter-the-wild",
-        "type": "QUESTION",
+        "type": "DECISION",
         "textData": [
           "This is the introduction.\nAre you ready to enter the adventure? [yes|no]"
         ],
@@ -20,7 +20,7 @@
       "accessCondition": "adventurer",
       "task": {
         "name": "deer-adventurer",
-        "type": "QUESTION",
+        "type": "DECISION",
         "textData": [
           "You leave your house and stand in a beautiful grassland. The landscape is amazing. The sun is shining, the birds are singing and the flowers are blooming.",
           "You do some steps and admire a large oak. Suddenly two deers appear.",
@@ -102,7 +102,7 @@
       "accessCondition": "explorer",
       "task": {
         "name": "footprints",
-        "type": "QUESTION",
+        "type": "DECISION",
         "textData": [
           "You see some footprint and kneel down to take a more detailed look on them.",
           "There seem to be two different types of footprints. One consists of two shapes so you identify them as deer ones.",
@@ -162,7 +162,7 @@
       "accessCondition": "pathfinder",
       "task": {
         "name": "well-escape",
-        "type": "QUESTION",
+        "type": "DECISION",
         "textData": [
           "You threw the grabbling-hook with the rope out of the well.",
           "You manage to climb out of the well!",

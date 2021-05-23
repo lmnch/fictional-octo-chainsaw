@@ -1,4 +1,4 @@
-import Task, { Conversation, EscapeRoom, Question } from "../model/Task.js";
+import Task, { Conversation, Decision, EscapeRoom } from "../model/Task.js";
 import Room from "../model/Room.js";
 import roomManager from "../model/RoomManager.js";
 import { taskType } from "../model/Task.js";
@@ -47,8 +47,8 @@ export default class FileReader {
    */
   readTask(jsonTaskData) {
     // determine type
-    if (jsonTaskData.type == taskType.QUESTION) {
-      return new Question(
+    if (jsonTaskData.type == taskType.DECISION) {
+      return new Decision(
         jsonTaskData.name,
         jsonTaskData.questionChannel,
         jsonTaskData.solutionChannel,

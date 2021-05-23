@@ -125,7 +125,7 @@ export default class Terraformer {
    * @param {*} roleNames 
    */
   async createAllRoles(msg, roleNames) {
-    await Promise.all(roleNames.map(roleName => await this.createRole(roleName, msg)));
+    await Promise.all(roleNames.map(async roleName => await this.createRole(roleName, msg)));
   }
 
   /**

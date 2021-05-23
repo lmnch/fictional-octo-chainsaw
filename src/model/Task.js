@@ -3,9 +3,9 @@ import memberTaskStateManager from "../riddler/MemberTaskStateManager.js";
 import roomManager from "./RoomManager.js";
 
 export const taskType = {
+  DECISION: "DECISION",
   ESCAPE_ROOM: "ESCAPE_ROOM",
-  QUESTION: "QUESTION",
-  CONVERSATION: "CONVERSATION",
+  CONVERSATION: "CONVERSATION"
 };
 
 /**
@@ -72,7 +72,7 @@ export default class Task {
 }
 
 const imgRegex = /\!\[(.+)\]\((.+)\)/gm;
-export class Question extends Task {
+export class Decision extends Task {
   constructor(name, questionChannel, solutionChannel, textData, solutions) {
     super(name);
     this._questionChannel = questionChannel;
@@ -104,7 +104,7 @@ export class Question extends Task {
   }
 
   type() {
-    return taskType.QUESTION;
+    return taskType.DECISION;
   }
 
   getNextRoomForSolution(member, answer) {
