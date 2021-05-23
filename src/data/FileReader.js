@@ -5,7 +5,16 @@ import { taskType } from "../model/Task.js";
 
 import fs from "fs";
 
+/**
+ * Reads the room structure and related tasks from the json file.
+ */
 export default class FileReader {
+  /**
+   * Converts all js objects in "rooms" property to rooms and all tasks in them
+   * to matching tasks objects.
+   *
+   * @param {Object} mysteryKey
+   */
   readFile(mysteryKey) {
     const textData = fs.readFileSync(
       `./data/mysteries/mystery-${mysteryKey}.json`
@@ -30,9 +39,15 @@ export default class FileReader {
     roomManager.setLoadedMystery(mysteryKey);
   }
 
+  /**
+   * Converts a js object (e.g. read from json) to the related task object.
+   * Which derivative class is taken is determined by the type.
+   *
+   * @param {Object} jsonTaskData
+   */
   readTask(jsonTaskData) {
     // determine type
-    if (jsonTaskData.type == "QUESTION") {
+    if (jsonTaskData.type == taskType.QUESTION) {
       return new Question(
         jsonTaskData.name,
         jsonTaskData.questionChannel,

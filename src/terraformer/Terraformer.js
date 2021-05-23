@@ -1,6 +1,15 @@
+/**
+ * Creates channels and roles for a mystery on a server which are necessary for a server 
+ */
 export default class Terraformer {
   constructor() {}
 
+  /**
+   * Checks if a channel is already present on the server
+   * 
+   * @param {*} msg 
+   * @param {string} channelName 
+   */
   checkIfChannelExists(msg, channelName) {
     if (msg.guild.channels.exists(channelName)) {
       msg.reply("Channel exists already");
@@ -8,8 +17,14 @@ export default class Terraformer {
   }
 
   /**
-   * params msg -> is msg object
-   * params channelType -> text/voice
+   * Creates a new channel on the server 
+   * 
+   * @param {*} msg message object
+   * @param {string} channelName Name of the channel 
+   * @param {*} channelType Type of the channel (category, text, voice)
+   * @param {*} parentChannel parent Channel (related category)
+   * @param {string} nescessaryRole Role which is needed to see the channel 
+   * @returns 
    */
   async createNewChannel(
     msg,
@@ -48,6 +63,15 @@ export default class Terraformer {
       });
   }
 
+  /**
+   * Creates a channel of type "text"
+   * 
+   * @param {*} msg 
+   * @param {*} channelName 
+   * @param {*} role 
+   * @param {*} parentChannel 
+   * @returns 
+   */
   async createTextChannel(msg, channelName, role, parentChannel) {
     return await this.createNewChannel(
       msg,
@@ -57,6 +81,16 @@ export default class Terraformer {
       role
     );
   }
+
+  /**
+   * Creates a channel of type "voice"
+   * 
+   * @param {*} msg 
+   * @param {*} channelName 
+   * @param {*} role 
+   * @param {*} parentChannel 
+   * @returns 
+   */
   async createVoiceChannel(msg, channelName, role, parentChannel) {
     return await this.createNewChannel(
       msg,
@@ -66,6 +100,14 @@ export default class Terraformer {
       role
     );
   }
+
+  /**
+   * Creates a chennel of type "category"
+   * 
+   * @param {*} msg 
+   * @param {*} channelName 
+   * @returns 
+   */
   async createCategory(msg, channelName) {
     return await this.createNewChannel(
       msg,
@@ -76,12 +118,22 @@ export default class Terraformer {
     );
   }
 
+  /**
+   * Creates roles by all the role names which are passed
+   * 
+   * @param {*} msg 
+   * @param {*} roleNames 
+   */
   async createAllRoles(msg, roleNames) {
-    for (let a = 0; a < roleNames.length; a++) {
-      await this.createRole(roleNames[a], msg); // todo: create roles parallel
-    }
+    await Promise.all(roleNames.map(roleName => await this.createRole(roleName, msg)));
   }
 
+  /**
+   * Creates a role with passed name
+   * 
+   * @param {string} roleName 
+   * @param {*} msg 
+   */
   async createRole(roleName, msg) {
     let role = msg.guild.roles.cache.find((x) => x.name === roleName);
     if (role === undefined) {
@@ -104,6 +156,13 @@ export default class Terraformer {
     }
   }
 
+  /**
+   * Removes a channel
+   * 
+   * @param {*} msg 
+   * @param {string} channelName 
+   * @returns 
+   */
   async destroyChannel(msg, channelName) {
     let fetchedChannel = msg.guild.channels.cache.find(
       (x) => x.name === channelName

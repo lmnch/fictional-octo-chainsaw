@@ -8,6 +8,9 @@ export const taskType = {
   CONVERSATION: "CONVERSATION",
 };
 
+/**
+ * Abstract task class
+ */
 export default class Task {
   constructor(name) {
     this._name = name;
@@ -17,26 +20,52 @@ export default class Task {
     return this._name;
   }
 
+  /**
+   * Returns all channels related to the task
+   */
   getChannels() {
     throw new Error("Cannot return channels of abstract Task");
   }
 
+  /**
+   * Returns one of the taskTypes
+   */
   type() {
     throw new Error("Cannot determine type of abstract task");
   }
 
+  /**
+   * Returns the next room's name for the answer text.
+   * 
+   * @param {*} member 
+   * @param {string} answer 
+   */
   getNextRoomForSolution(member, answer) {
     throw new Error("Cannot check answer for abstract task");
   }
 
+  /**
+   * "Places" a task. 
+   * This could e.g. mean to write a question in a channel
+   * 
+   * @param {string} msg 
+   */
   placeTask(msg) {
     throw new Error("Cannot place abstract task");
   }
 
+  /**
+   * Checks if a message is related to the task
+   * 
+   * @param {string} msg 
+   */
   async relatesToMsg(msg) {
     throw new Error("Abstract task cannot relate to a msg");
   }
-
+  
+  /**
+  * Returns if the access check should be skipped
+  */
   skipCheckAccessCheck() {
     return false;
   }

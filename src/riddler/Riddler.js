@@ -2,11 +2,28 @@ import gatekeeper from "../gatekeeper/Gatekeeper.js";
 import roomManager from "../model/RoomManager.js";
 import { taskType } from "../model/Task.js";
 
+/**
+ * Manages answers from the user and places tasks in channels.
+ */
 class Riddler {
+
+  /**
+   * Calls task's place task method 
+   * (TODO: think about refactoring this. Task types should not have knowledge about discord specific types)
+   * 
+   * @param {Task} task 
+   * @param {*} msg 
+   */
   async placeTask(task, msg) {
     await task.placeTask(msg);
   }
 
+  /**
+   * Checks the answer given in the message and "moves" player to next room
+   * 
+   * @param {*} msg 
+   * @returns 
+   */
   async checkAnswer(msg) {
     const room = await roomManager.getRelatedRoomByMsg(msg);
 

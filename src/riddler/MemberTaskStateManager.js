@@ -2,18 +2,38 @@ import sqlite3 from "sqlite3";
 import roomManager from "../model/RoomManager.js";
 import { taskType } from "../model/Task.js";
 
+/**
+ * Manages all types of states which cannot be stored by the role-only
+ * (TODO: Refactor to be able to use different datasources) 
+ */
 class MemberTaskStateManager {
+
+  /**
+   * Inits SQLite
+   * 
+   * @param {string} path 
+   */
   initSQLite(path) {
     if (!path) path = ":memory:";
     this._db = new sqlite3.Database(path);
   }
 
+  /**
+   * Creates a table for the data
+   */
   createTableIfNotExists() {
     this._db.run(
       "CREATE TABLE IF NOT EXISTS MemberTaskData (userid TEXT, mystery TEXT, taskname TEXT, statejson TEXT, PRIMARY KEY(userid, mystery, taskname));"
     );
   }
 
+  /**
+   * Returns the member state json object which is stored for member and task
+   * 
+   * @param {string} taskname 
+   * @param {*} member 
+   * @returns 
+   */
   getMemberTaskState(taskname, member) {
     const memberid = member.id;
     const myst = roomManager.loadedMystery;
@@ -37,6 +57,14 @@ class MemberTaskStateManager {
     });
   }
 
+  /**
+   * Stores a json object by name of the task and member's id
+   * 
+   * @param {string} taskname 
+   * @param {*} member 
+   * @param {object} stateobj 
+   * @returns 
+   */
   setMemberTaskState(taskname, member, stateobj) {
     const userid = member.id;
     const myst = roomManager.loadedMystery;
@@ -76,6 +104,13 @@ class MemberTaskStateManager {
     });
   }
 
+  /**
+   * Removes the database entry by taskname and memberid
+   * 
+   * @param {string} taskname 
+   * @param {*} member 
+   * @returns 
+   */
   removeMemberTaskStateEntry(taskname, member){
     const userid = member.id;
     const myst = roomManager.loadedMystery;
@@ -92,6 +127,9 @@ class MemberTaskStateManager {
     })
   }
 
+  /**
+   * Closes db connection
+   */
   close() {
     this._db.close();
   }
