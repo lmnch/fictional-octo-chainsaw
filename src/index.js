@@ -47,8 +47,8 @@ client.on("message", async (msg) => {
   } else if (cmd === "list") {
     msg.channel.send(availableMysteries.join("\n"))
   } else if (cmd.startsWith("terra")) {
-    if (!message.member.hasPermission("ADMINISTRATOR")) {
-      message.lineReply("Only administrators can terraform the server!");
+    if (!msg.member.hasPermission("ADMINISTRATOR")) {
+      msg.reply("Only administrators can terraform the server!");
       return;
     }
 
