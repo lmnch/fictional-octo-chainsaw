@@ -13,6 +13,12 @@ import riddler from "./riddler/Riddler.js";
 import { taskType } from "./model/Task.js";
 import memberTaskStateManager from "./riddler/MemberTaskStateManager.js";
 
+
+const availableMysteriesText = fs.readFileSync("./data/available_mysteries.json", "utf8");
+const availableMysteries = JSON.parse(availableMysteriesText);
+
+const PREFIX = "foc!";
+
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 
@@ -21,28 +27,31 @@ client.on("ready", () => {
   memberTaskStateManager.createTableIfNotExists();
 });
 
-client.on("disconnect", ()=>{
+client.on("disconnect", () => {
   memberTaskStateManager.close();
-})
-
-client.on("guildCreate", (guild) => {
-  guild.systemChannel.send("LUKAS ist dumm");
 });
 
 client.on("message", async (msg) => {
-  const channelName = msg.channel.name;
+  if (!msg.content.startsWith(PREFIX)) {
+    return;
+  }
 
-  if (msg.content === "ping") {
-    msg.channel.send("pong");
-  } else if (msg.content === "de") {
-    gatekeeper.removeAccess(
-      msg.member,
-      msg.guild.roles.cache.find((x) => x.name === roomManager.getStartRole())
-    );
-  } else if (msg.content === "start adventure") {
-    roomManager.getAllRoles().filter(role=>roomManager.getStartRole()===role).forEach(role=>gatekeeper.removeAccess(msg, role));
+  const cmd = msg.content.replace(PREFIX, "");
+
+  if (cmd === "start") {
+    roomManager
+      .getAllRoles()
+      .filter((role) => roomManager.getStartRole() === role)
+      .forEach((role) => gatekeeper.removeAccess(msg, role));
     gatekeeper.giveAccess(msg, roomManager.getStartRole());
-  } else if (msg.content.startsWith("terra")) {
+  } else if (cmd === "list") {
+    msg.channel.send(availableMysteries.join("\n"))
+  } else if (cmd.startsWith("terra")) {
+    if (!message.member.hasPermission("ADMINISTRATOR")) {
+      message.lineReply("Only administrators can terraform the server!");
+      return;
+    }
+
     const mysteryKey = msg.content.split(" ")[1];
 
     fileReader.readFile(mysteryKey);
@@ -81,7 +90,7 @@ client.on("message", async (msg) => {
 
       // write questions
       if (room.task) {
-          riddler.placeTask(room.task, msg);
+        riddler.placeTask(room.task, msg);
       }
     });
   } else {
@@ -90,5 +99,16 @@ client.on("message", async (msg) => {
 });
 
 // read token from discord_token file
-const data = fs.readFileSync("./discord_token", "utf8");
-client.login(data);
+try {
+  const data = fs.readFileSync("./discord_token", "utf8");
+  try {
+    client.login(data);
+  } catch (e) {
+    console.error("login failed:", e);
+  }
+} catch (e) {
+  console.error(
+    "Could not read './discord_token'. Did you place it in the working directory?\n",
+    e
+  );
+}

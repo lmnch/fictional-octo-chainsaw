@@ -1,11 +1,9 @@
-
 /**
  * Represents a room of the riddle
  */
 export default class Room {
-
   /**
-   * 
+   *
    * @param {*} roomSpeechChannel Name of the speech channel
    * @param {*} accessCondition Name of the role which is needed to access the room
    * @param {*} task Task which should be solved in a room
@@ -45,9 +43,9 @@ export default class Room {
 
   /**
    * Checks if a message relates to the room (or the corresponding task)
-   * 
+   *
    * @param {*} msg sent message
-   * @returns 
+   * @returns
    */
   async relatesToMessage(msg) {
     if (this.roomName === msg.channel.name) {
@@ -64,8 +62,7 @@ export default class Room {
    * @returns if access check should be skipped
    */
   skipCheckAccessCheck() {
-    if (!this._task)
-      return false;
+    if (!this._task) return false;
 
     return this._task.skipCheckAccessCheck();
   }

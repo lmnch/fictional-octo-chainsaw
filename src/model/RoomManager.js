@@ -1,4 +1,3 @@
-
 /**
  * Holds some data about the selected mystery
  */
@@ -9,8 +8,8 @@ class RoomManager {
 
   /**
    * Adds a room to the whole room list
-   * 
-   * @param {Room} room 
+   *
+   * @param {Room} room
    */
   addRoom(room) {
     this.rooms[room.roomName] = room;
@@ -25,8 +24,8 @@ class RoomManager {
 
   /**
    * Returns room with this room name
-   * 
-   * @param {string} roomName 
+   *
+   * @param {string} roomName
    * @returns Room
    */
   getRoom(roomName) {
@@ -35,8 +34,8 @@ class RoomManager {
 
   /**
    * Summarizes all roles which are access roles of existing rooms
-   * 
-   * @returns 
+   *
+   * @returns
    */
   getAllRoles() {
     return [
@@ -46,8 +45,8 @@ class RoomManager {
 
   /**
    * Returns the access role which is needed to access the room with the flag isStartRoom
-   * 
-   * @returns 
+   *
+   * @returns
    */
   getStartRole() {
     let startRole = null;
@@ -62,13 +61,12 @@ class RoomManager {
 
   /**
    * Finds the room which is related to the msg
-   * 
-   * @param {*} msg 
-   * @returns 
+   *
+   * @param {*} msg
+   * @returns
    */
   async getRelatedRoomByMsg(msg) {
     for (const room of Object.values(this.rooms)) {
-
       if (await room.relatesToMessage(msg)) {
         return room;
       }
@@ -77,23 +75,23 @@ class RoomManager {
   }
 
   /**
-   * 
+   *
    * @returns string[] names of all text and speech channels in the mystery
    */
-  getAllTextAndVoiceChannels(){
+  getAllTextAndVoiceChannels() {
     const names = [];
-    Object.values(this.rooms).forEach(room => {
-      room.textChannels.forEach(name=>names.push(name));
+    Object.values(this.rooms).forEach((room) => {
+      room.textChannels.forEach((name) => names.push(name));
       names.push(room.roomName); // voice channel
     });
     return names;
   }
 
-  setLoadedMystery(key){
+  setLoadedMystery(key) {
     this._loadedMystery = key;
   }
 
-  get loadedMystery(){
+  get loadedMystery() {
     return this._loadedMystery;
   }
 }

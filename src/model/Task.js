@@ -5,7 +5,7 @@ import roomManager from "./RoomManager.js";
 export const taskType = {
   DECISION: "DECISION",
   ESCAPE_ROOM: "ESCAPE_ROOM",
-  CONVERSATION: "CONVERSATION"
+  CONVERSATION: "CONVERSATION",
 };
 
 /**
@@ -36,19 +36,19 @@ export default class Task {
 
   /**
    * Returns the next room's name for the answer text.
-   * 
-   * @param {*} member 
-   * @param {string} answer 
+   *
+   * @param {*} member
+   * @param {string} answer
    */
   getNextRoomForSolution(member, answer) {
     throw new Error("Cannot check answer for abstract task");
   }
 
   /**
-   * "Places" a task. 
+   * "Places" a task.
    * This could e.g. mean to write a question in a channel
-   * 
-   * @param {string} msg 
+   *
+   * @param {string} msg
    */
   placeTask(msg) {
     throw new Error("Cannot place abstract task");
@@ -56,16 +56,16 @@ export default class Task {
 
   /**
    * Checks if a message is related to the task
-   * 
-   * @param {string} msg 
+   *
+   * @param {string} msg
    */
   async relatesToMsg(msg) {
     throw new Error("Abstract task cannot relate to a msg");
   }
-  
+
   /**
-  * Returns if the access check should be skipped
-  */
+   * Returns if the access check should be skipped
+   */
   skipCheckAccessCheck() {
     return false;
   }
@@ -364,10 +364,10 @@ export class EscapeRoom extends Task {
     }
 
     // else check if its solution
-    const usedItems = answer.split(",").map(used=>used.trim());
+    const usedItems = answer.split(",").map((used) => used.trim());
 
     for (const neededItem of this._itemsNeededToEscape) {
-      if(!usedItems.includes(neededItem)) {
+      if (!usedItems.includes(neededItem)) {
         return null;
       }
     }
