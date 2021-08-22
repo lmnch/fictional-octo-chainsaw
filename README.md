@@ -1,5 +1,8 @@
 # Introduction
-fictional-octo-chainsaw is a discord bot which transforms your server into a mystery consiting of multiple rooms with tasks to solve.
+The idea behind `fictional-octo-chainsaw` is to convert a discord server to an esacape room.
+To do so it creates different rooms which consists of related speech and text channels. 
+Each room has a speech channel to communicate with other users in the same room and one or more text channels to display the question or the task.
+The rooms and tasks are configured in a json file.
 
 # Features
 * Mysteries are defined as json and contain rooms with tasks
